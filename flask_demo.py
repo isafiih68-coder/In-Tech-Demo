@@ -3,9 +3,9 @@ import sqlite3, datetime, hashlib, os, json, secrets
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# PUBLIC DEMO VERSION: use environment variables for deployment secrets.
+
 app = Flask(__name__)
-app.secret_key = os.environ.get("DEMO_STORE_SECRET_KEY") or secrets.token_hex(32)  # Set a persistent key in deployment.
+app.secret_key = os.environ.get("DEMO_STORE_SECRET_KEY") or secrets.token_hex(32)  
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -18,7 +18,7 @@ ALLOWED_EXT = {"jpg", "jpeg", "png", "webp", "gif"}
 ADMIN_EMAIL = os.environ.get("DEMO_STORE_ADMIN_EMAIL", "admin@example.com")
 ADMIN_PASSWORD = os.environ.get("DEMO_STORE_ADMIN_PASSWORD", "")
 
-# Placeholder data for public demo. Replace with your own details when deploying.
+
 STORE_MAP_URL = ""
 STORE_NAME = "Demo Store"
 STORE_ADDRESS = "Alamat contoh — ganti dengan alamat toko Anda"
@@ -161,7 +161,7 @@ def init_db():
         )
     """)
 
-    # Compatibility with older V16/V17 databases.
+    
     add_column_if_missing(conn, "users", "address", "TEXT DEFAULT ''")
     add_column_if_missing(conn, "orders", "courier_fee", "INTEGER DEFAULT 0")
     add_column_if_missing(conn, "orders", "subtotal", "INTEGER DEFAULT 0")
@@ -177,7 +177,7 @@ def init_db():
         conn.executemany("INSERT INTO categories(name,active) VALUES(?,1)",
                          [("Semua",), ("Produk",), ("Paket",)])
 
-    # Seed the four products if the new product table is empty.
+    
     if conn.execute("SELECT COUNT(*) FROM products").fetchone()[0] == 0:
         product_cat = conn.execute("SELECT id FROM categories WHERE name='Produk'").fetchone()
         cid = product_cat["id"] if product_cat else None
@@ -197,7 +197,7 @@ def init_db():
                 VALUES(?,?,?,?,?,?,?,?,?)
             """, (name, price, weight, desc, stock, cat, 1, now(), now()))
             pid = cur.lastrowid
-            # Optional demo image files can be placed in /static.
+            
             old_path = os.path.join(BASE_DIR, "static", old_img)
             if os.path.exists(old_path):
                 conn.execute("""
@@ -224,7 +224,7 @@ def verify_password(stored, password):
             return check_password_hash(stored, password)
     except Exception:
         pass
-    # Backward compatibility with V16/V17 SHA-256.
+    
     return hashlib.sha256(password.encode()).hexdigest() == stored
 
 
@@ -276,7 +276,7 @@ def product_dict(conn, row):
     }
 
 
-# ---------------- CUSTOMER API ----------------
+
 
 @app.get("/api/products")
 def api_products():
@@ -419,7 +419,7 @@ def api_orders():
     if not raw_items:
         return jsonify({"ok": False, "error": "Keranjang kosong."}), 400
 
-    # Never trust client prices. Recalculate from database.
+    
     conn = get_db()
     clean_items = []
     subtotal = 0
@@ -581,7 +581,7 @@ def api_notifications_read():
     return jsonify({"ok": True})
 
 
-# ---------------- ADMIN ----------------
+
 
 ADMIN_CSS = """
 :root{--orange:#ff6a00;--dark:#17202a;--bg:#f4f6f8}
@@ -1016,7 +1016,7 @@ ADMIN_PROMOS = """
 """
 
 
-# ---------------- CUSTOMER UI ----------------
+
 
 CUSTOMER_HTML = r"""<!doctype html>
 <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
@@ -1162,7 +1162,7 @@ def health():
     return jsonify({"ok": True, "version": "V19", "products": products, "users": users, "workshop": STORE_MAP_URL})
 
 
-# Keep PythonAnywhere WSGI compatibility.
+
 application = app
 
 if __name__ == "__main__":
