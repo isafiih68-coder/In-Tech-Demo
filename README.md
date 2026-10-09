@@ -1,52 +1,42 @@
-# IN.TECH - Demo Store [BETA V19] - Sanitized Public Version
+<p align="center">
+  <img src="IMG-20261009-WA7559.jpg" width="140" alt="IN.TECH Logo" />
+</p>
 
-> ⚠️ **SAFE DEMO VERSION** - This is a sanitized public version derived from a private e-commerce project. It contains no real customer data, passwords, addresses, secrets, or `.env` files.
+# IN.TECH - Demo Store [BETA V1.0]
 
-**🚀 Live Demo:** https://inet.pythonanywhere.com
-**Repository:** `isafiih68-coder/In-Tech-Demo`  
-**Main File:** `flask_demo.py` (1169 lines)
+<p>
+  <a href="https://inet.pythonanywhere.com"><img src="https://img.shields.io/badge/Live%20Demo-inet.pythonanywhere.com-00C853?style=flat-square"></a>
+  <img src="https://img.shields.io/badge/Stack-Python%20%2F%20Flask%20%2F%20SQLite-blue?style=flat-square">
+  <img src="https://img.shields.io/badge/Version-BETA%20V1.0-orange?style=flat-square">
+</p>
 
-### 🌐 Try The Live App
-You can directly try the running version of this project here:
-**👉 https://inet.pythonanywhere.com**
+> Single-file Flask e-commerce implementation (1169 LOC) — Sanitized educational build derived from a private production codebase.
 
-- Homepage / Shop
-- Admin: `/admin` (use your ENV password for login)
+**Live Demo:** https://inet.pythonanywhere.com  
+**Main File:** `flask_demo.py`
 
-### 🔒 What Was Sanitized?
-To make this repository safe for public use, all sensitive data was removed:
+### Overview
+A minimal yet complete e-commerce system built entirely in a single file. This public repository is a sanitized version intended for educational and portfolio reference. It contains no real customer data, credentials, or private assets.
 
-- `STORE_NAME` -> "Demo Store" (original brand removed)
-- `ADMIN_EMAIL` -> `admin@example.com` via ENV `DEMO_STORE_ADMIN_EMAIL`
-- `ADMIN_PASSWORD` -> Empty by default, via ENV `DEMO_STORE_ADMIN_PASSWORD` (no hardcoded password)
-- `STORE_ADDRESS` -> Generic placeholder text
-- `COURIER_TRACKING_URLS` -> Replaced with generic "Kurir A / B / C" with empty URLs
-- `SECRET_KEY` -> Loaded from ENV `DEMO_STORE_SECRET_KEY` or auto-generated via `secrets.token_hex(32)`
-- `DB` -> Renamed to `demo_store.db` inside `/data` directory (original DB not included)
-- Removed: All product images, customer upload photos, real database, and personal URLs
+The production version is maintained separately in a private repository.
 
-The original private code is securely stored in a separate private repository `In-Tech`.
-
-### 🚀 Features (V19)
-- Fullstack Flask E-commerce
+### Features
+- Flask full-stack, single-file architecture
 - SQLite with auto-migration helper `add_column_if_missing()`
-- Admin Dashboard: product CRUD, stock management, order management
-- Image Upload: `jpg, jpeg, png, webp, gif` with 5MB limit + `secure_filename`
-- Customer Features: Registration, login, cart, checkout, order tracking
-- Security: Password hashing with Werkzeug `generate_password_hash` / `check_password_hash`
-- REST API Endpoints:
-    - `GET /api/products`
-    - `GET /api/product`
-    - `GET /api/categories`
-    - `POST /api/register`
-    - `POST /api/login`
+- Admin dashboard: product CRUD, stock & order management
+- Secure image upload: jpg, jpeg, png, webp, gif (5MB limit)
+- Customer auth, cart, checkout, order tracking
+- Password hashing with Werkzeug
+- REST API: `/api/products`, `/api/product`, `/api/categories`
 
-### 🛠️ Tech Stack
-Python 3, Flask, SQLite3, Werkzeug, Jinja2, HTML/CSS/JS
+### Tech Stack
+Python 3, Flask, SQLite3, Werkzeug, Jinja2
 
-### ⚙️ Local Setup
-
-1. Clone the repo
+### Local Setup
 ```bash
 git clone https://github.com/isafiih68-coder/In-Tech-Demo.git
 cd In-Tech-Demo
+pip install flask
+export DEMO_STORE_SECRET_KEY="your-secret"
+export DEMO_STORE_ADMIN_PASSWORD="your-password"
+python flask_demo.py
